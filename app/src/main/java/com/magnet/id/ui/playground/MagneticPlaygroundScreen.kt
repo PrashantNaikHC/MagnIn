@@ -35,6 +35,7 @@ import com.magnet.id.ui.calibration.SensorCalibrationSheet
 import com.magnet.id.ui.playground.canvas.MagneticFieldCanvas
 import com.magnet.id.ui.playground.canvas.PlaygroundMode
 import com.magnet.id.ui.playground.components.MagneticHudOverlay
+import com.magnet.id.ui.playground.components.RetroDialView
 import com.magnet.id.ui.theme.DarkBackground
 import com.magnet.id.ui.theme.DarkSurface
 import com.magnet.id.ui.theme.NorthPoleCyan
@@ -102,6 +103,14 @@ fun MagneticPlaygroundScreen(
                 viewModel.snapToSensor(widthPx, heightPx)
             }
         )
+
+        // Retro Mechanical Dial for DIAL mode
+        if (selectedMode == PlaygroundMode.DIAL) {
+            RetroDialView(
+                reading = netReading,
+                constraint = kinematicConstraint
+            )
+        }
 
         // Superimposed telemetry HUD and controls
         MagneticHudOverlay(
