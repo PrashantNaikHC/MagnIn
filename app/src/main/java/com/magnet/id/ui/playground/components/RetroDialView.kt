@@ -121,15 +121,15 @@ fun RetroDialView(
             val diff = ((targetAngle - currentAngleDeg + 540f) % 360f) - 180f
             val newAngle = (currentAngleDeg + diff + 360f) % 360f
 
-            val prevRounded = currentAngleDeg.roundToInt()
-            val newRounded = newAngle.roundToInt()
+            // Trigger mechanical tick every 2 degrees of rotation
+            val prevDetent = (currentAngleDeg / 2f).toInt()
+            val newDetent = (newAngle / 2f).toInt()
 
-            if (prevRounded != newRounded) {
-                val stepCount = abs(newRounded - prevRounded)
-                if (stepCount in 1..20) {
+            if (prevDetent != newDetent) {
+                val stepCount = abs(newDetent - prevDetent)
+                if (stepCount in 1..10) {
                     triggerTick()
                 }
-                lastTickAngle = newRounded
             }
             currentAngleDeg = newAngle
         }
@@ -164,9 +164,9 @@ fun RetroDialView(
                             lastTouchAngle = touchAngle
 
                             val newAngle = (currentAngleDeg + delta + 360f) % 360f
-                            val prevDeg = currentAngleDeg.roundToInt()
-                            val nextDeg = newAngle.roundToInt()
-                            if (prevDeg != nextDeg) {
+                            val prevDetent = (currentAngleDeg / 2f).toInt()
+                            val nextDetent = (newAngle / 2f).toInt()
+                            if (prevDetent != nextDetent) {
                                 triggerTick()
                             }
                             currentAngleDeg = newAngle
